@@ -102,14 +102,15 @@
     } );
     } );
     function analisaSentimen(){
-        var s = document.getElementById("inputkalimat").value;
-        var kalimatBersih = hapusKarakter(s);
+        var stringnya = document.getElementById("inputkalimat").value;
+        var kalimatBersih = hapusKarakter(stringnya);
         var listToken = tokenisasi(kalimatBersih);
-        var listTokenBobot = hitungBobot(listToken);
+        var listBersih = removeEmpty(listToken);
+        var listTokenBobot = hitungBobot(listBersih);
         var bobot = bobotFinal(listTokenBobot);
         var klasifikasiakhir = klasifikasi(bobot);
         console.table(listTokenBobot);
-        hasilAkhir(bobot,klasifikasiakhir);
+        //hasilAkhir(bobot,klasifikasiakhir);
         document.getElementById("jumlahkata").innerHTML=listTokenBobot.length;
         document.getElementById("jumlahbobot").innerHTML=bobot;
         document.getElementById("klasifikasi").innerHTML=klasifikasiakhir;

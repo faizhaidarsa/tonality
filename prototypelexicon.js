@@ -40,6 +40,14 @@ function tokenisasi(kalimat){
   return kalimat.split(" ")
 }
 
+function removeEmpty(listToken){
+  return listToken.filter(item=>{
+    if(item!==""){
+      return item
+    }
+  })
+}
+
 //Menghitung bobot artikel
 function hitungBobot(listToken){
   var hasil = listToken.map((s)=>{
