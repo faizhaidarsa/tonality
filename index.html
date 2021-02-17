@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="unnamed.jpg">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,8 +20,11 @@
     <div class="row mb-2 mt-2">
         <div class="col-12">
             <div class="card">
-                <div class="card-body text-center">
-                    Tonality Lexicon Base dibuat menggunakan kamus kata dari <a target="_blank" href="https://github.com/fajri91/InSet">fajri91</a> 
+                <div class="card-body">
+                    <ul>
+                        <li>Tonality Lexicon Base dibuat menggunakan kamus kata dari <a target="_blank" href="https://github.com/fajri91/InSet">fajri91</a></li>
+                        <li>Stemming dan tokenisasi menggunakan library dari <a target="_blank" href="https://github.com/damzaky/sastrawijs">damzaky</a></li>
+                    </ul> 
                 </div>
             </div>
         </div>
@@ -79,6 +83,9 @@
 </body>
 
 </html>
+<script src='stemmer.js'></script>
+<script src='tokenizer.js'></script>
+<script src='dictionary.js'></script>
 <script src="words.js"></script>
 <script src="prototypelexicon.js"></script>
 <script>
@@ -102,11 +109,18 @@
     } );
     } );
     function analisaSentimen(){
+        var stemmer = new Stemmer();
+        var tokenizer = new Tokenizer();
         var stringnya = document.getElementById("inputkalimat").value;
-        var kalimatBersih = hapusKarakter(stringnya);
-        var listToken = tokenisasi(kalimatBersih);
-        var listBersih = removeEmpty(listToken);
-        var listTokenBobot = hitungBobot(listBersih);
+        // var kalimatBersih = hapusKarakter(stringnya);
+        // var listToken = tokenisasi(kalimatBersih);
+        // var listBersih = removeEmpty(listToken);
+        var listBersih = tokenizer.tokenize(stringnya);
+        var stemmed = listBersih.map(item=>{
+            return stemmer.stem(item);
+            // return item;
+        })
+        var listTokenBobot = hitungBobot(stemmed);
         var bobot = bobotFinal(listTokenBobot);
         var klasifikasiakhir = klasifikasi(bobot);
         //console.table(listTokenBobot);
