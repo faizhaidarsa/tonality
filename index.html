@@ -24,6 +24,7 @@
                     <ul>
                         <li>Tonality Lexicon Base dibuat menggunakan kamus kata dari <a target="_blank" href="https://github.com/fajri91/InSet">fajri91</a></li>
                         <li>Stemming dan tokenisasi menggunakan library dari <a target="_blank" href="https://github.com/damzaky/sastrawijs">damzaky</a></li>
+                        <li>Penghapusan stopword menggunakan kamus kata dari <a target="_blank" href="https://github.com/masdevid/ID-Stopwords">masdevid</a></li>
                     </ul> 
                 </div>
             </div>
@@ -83,11 +84,20 @@
 </body>
 
 </html>
+<!-- Sastrawi -->
 <script src='stemmer.js'></script>
 <script src='tokenizer.js'></script>
 <script src='dictionary.js'></script>
-<script src="words.js"></script>
+
+<!-- Custom -->
 <script src="prototypelexicon.js"></script>
+
+<!-- InSet -->
+<script src="words.js"></script>
+
+<!-- Stopword -->
+<script src="stopwords.js"></script>
+
 <script>
     dataSet=[]
     $(document).ready(function() {
@@ -116,7 +126,12 @@
         // var listToken = tokenisasi(kalimatBersih);
         // var listBersih = removeEmpty(listToken);
         var listBersih = tokenizer.tokenize(stringnya);
-        var stemmed = listBersih.map(item=>{
+        var listBersihNoStopword = listBersih.filter(item=>{
+            if(!stopwordFinal.includes(item.toLowerCase())){
+                return item
+            }
+        })
+        var stemmed = listBersihNoStopword.map(item=>{
             return stemmer.stem(item);
             // return item;
         })
